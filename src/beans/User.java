@@ -22,4 +22,13 @@ public class User implements java.io.Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
+    public String status(int mybal,int tbal,int c) {
+    	int rb=mybal+tbal/c;
+    	if(rb>0) {
+    		return "You need to pay : "+rb;
+    	}
+    	else {
+    		return "You will be paid : "+rb*-1;
+    	}
+    }
 }

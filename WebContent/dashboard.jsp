@@ -10,7 +10,7 @@
 </head>
 <body>
 <%! 
-ResultSet rs; String nm,em,user; int bal;
+ResultSet rs; String nm,em,user; int bal,spent,mybalance,status,count=0;
 %>
 <%
 if(usr.getUsername()==null){
@@ -25,7 +25,7 @@ String query="select * from users";
 PreparedStatement pst=con.prepareStatement(query);
 rs=pst.executeQuery();
 rs.next();
-bal=rs.getInt(4);
+spent=rs.getInt(4);
 }catch(ClassNotFoundException ce)
 {
 	ce.printStackTrace();
@@ -36,7 +36,9 @@ catch(SQLException ce)
 }
 %>
 <center>
-<br><br><br><br>
+<br><br>
+<a type="button" href="http://localhost:8080/Godutch/dashboard.jsp">Refresh</a>
+<br><br>
 <form name="spen" method="post" action="transaction.jsp">
 <fieldset>
 <legend>Spent</legend>
@@ -52,7 +54,9 @@ catch(SQLException ce)
 <input name="op" value="spent" type="hidden" >
 </form>
 <br><br>
-<h3>Total amount spent : '<%=bal%>'</h3>
+<h3>Total amount spent on trip: '<%=spent%>'</h3>
+<a role="button" href="http://localhost:8080/Godutch/viewtransaction.jsp?q=<%=user%>">View your transactions</a>
+<a role="button" href="http://localhost:8080/Godutch/viewtransaction.jsp?q=*">View trip transactions</a>
 <br><br>
 <form name="paid" method="post" action="transaction.jsp">
 <fieldset>
@@ -63,9 +67,14 @@ catch(SQLException ce)
 <th>*-----Name-----*</th>
 <th>----Balance----</th>
 </tr>
-<% while(rs.next()){
+<% 
+count=0;
+while(rs.next()){
+	++count;
 	nm=rs.getString(2);
-	if(nm.equals(user)){continue;}
+	if(rs.getString(1).equals(user)){
+		mybalance=rs.getInt(4);
+		continue;}
 	em=rs.getString(1);
 	bal=rs.getInt(4);
 	%>
@@ -85,9 +94,10 @@ catch(SQLException ce)
 </table>
 </fieldset>
 </form>
+<h3>Amount spent by you: '<%=mybalance*-1%>'</h3>
+<h3>Status : '<%=usr.status(mybalance,spent,count)%>'</h3>
 <br>
 <h6><a href="index.html">Login</a></h6>
-<br>
 <h6><a href="logout.jsp">Logout</a></h6>
 </center>
 </body>
