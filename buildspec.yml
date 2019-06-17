@@ -9,5 +9,5 @@ phases:
       - jar -cvf godutch.war * 
 artifacts:
   files:
-    - '**/*'
+    - godutch.war
   
