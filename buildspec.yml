@@ -6,8 +6,8 @@ phases:
       java: openjdk11
   post_build:
     commands:
-      - mvn package
+      - jar -cvf godutch.war * 
 artifacts:
   files:
     - '**/*'
-  base-directory: 'target/my-web-app'
+  
