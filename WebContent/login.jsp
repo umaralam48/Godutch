@@ -12,8 +12,17 @@
 <%
 try
 {
-Class.forName("com.mysql.jdbc.Driver");
-Connection con=DriverManager.getConnection("jdbc:mysql://localhost/godutch","admin","password");
+	if (System.getProperty("RDS_HOSTNAME") != null) {
+	      
+  	  Class.forName("com.mysql.jdbc.Driver");
+    String dbName ="godutch";
+    String userName = System.getProperty("RDS_USERNAME");
+    String passworddb = System.getProperty("RDS_PASSWORD");
+    String hostname = System.getProperty("RDS_HOSTNAME");
+    String port = System.getProperty("RDS_PORT");
+    String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + passworddb;
+   // logger.trace("Getting remote connection with connection string from environment variables.");
+    Connection con = DriverManager.getConnection(jdbcUrl);
 String emai=request.getParameter("email");
 String password=request.getParameter("psw");
 String query="select * from users where email=? and password=?";
@@ -30,6 +39,7 @@ if(rs.next()){
 else{
 	response.sendRedirect("usernotfound.html");
 }
+	}
 }catch(ClassNotFoundException ce)
 {
 	ce.printStackTrace();

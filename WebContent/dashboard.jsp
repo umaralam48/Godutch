@@ -19,13 +19,23 @@ if(usr.getUsername()==null){
 try
 {
 	user=usr.getUsername();
-Class.forName("com.mysql.jdbc.Driver");
-Connection con=DriverManager.getConnection("jdbc:mysql://localhost/godutch","admin","password");
+	if (System.getProperty("RDS_HOSTNAME") != null) {
+	      
+  	  Class.forName("com.mysql.jdbc.Driver");
+    String dbName ="godutch";
+    String userName = System.getProperty("RDS_USERNAME");
+    String passworddb = System.getProperty("RDS_PASSWORD");
+    String hostname = System.getProperty("RDS_HOSTNAME");
+    String port = System.getProperty("RDS_PORT");
+    String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + passworddb;
+   // logger.trace("Getting remote connection with connection string from environment variables.");
+    Connection con = DriverManager.getConnection(jdbcUrl);
 String query="select * from users";
 PreparedStatement pst=con.prepareStatement(query);
 rs=pst.executeQuery();
 rs.next();
 spent=rs.getInt(4);
+	}
 }catch(ClassNotFoundException ce)
 {
 	ce.printStackTrace();

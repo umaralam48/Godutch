@@ -23,8 +23,17 @@ try
 	System.out.println(op);
 	amount=Integer.parseInt(request.getParameter("am"));
 	desc=request.getParameter("desc");
-Class.forName("com.mysql.jdbc.Driver");
-Connection con=DriverManager.getConnection("jdbc:mysql://localhost/godutch","admin","password");
+	if (System.getProperty("RDS_HOSTNAME") != null) {
+	      
+  	  Class.forName("com.mysql.jdbc.Driver");
+    String dbName ="godutch";
+    String userName = System.getProperty("RDS_USERNAME");
+    String passworddb = System.getProperty("RDS_PASSWORD");
+    String hostname = System.getProperty("RDS_HOSTNAME");
+    String port = System.getProperty("RDS_PORT");
+    String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + passworddb;
+   // logger.trace("Getting remote connection with connection string from environment variables.");
+    Connection con = DriverManager.getConnection(jdbcUrl);
 String query="select * from users where email=?";
 PreparedStatement pst=con.prepareStatement(query);
 pst.setString(1,nm);
@@ -61,6 +70,7 @@ pst=con.prepareStatement(query);
 out.println("<h1>Transaction successful</h1>");
 RequestDispatcher rd=request.getRequestDispatcher("dashboard.jsp");
 rd.include(request,response);
+	}
 }catch(ClassNotFoundException ce)
 {
 	ce.printStackTrace();
