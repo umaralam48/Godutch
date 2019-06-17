@@ -47,7 +47,7 @@ catch(SQLException ce)
 %>
 <center>
 <br><br>
-<a type="button" href="http://localhost:8080/Godutch/dashboard.jsp">Refresh</a>
+<a type="button" href="/dashboard.jsp">Refresh</a>
 <br><br>
 <form name="spen" method="post" action="transaction.jsp">
 <fieldset>
@@ -65,8 +65,8 @@ catch(SQLException ce)
 </form>
 <br><br>
 <h3>Total amount spent on trip: '<%=spent%>'</h3>
-<a role="button" href="http://localhost:8080/Godutch/viewtransaction.jsp?q=<%=user%>">View your transactions</a>
-<a role="button" href="http://localhost:8080/Godutch/viewtransaction.jsp?q=*">View trip transactions</a>
+<a role="button" href="/viewtransaction.jsp?q=<%=user%>">View your transactions</a>
+<a role="button" href="/viewtransaction.jsp?q=*">View trip transactions</a>
 <br><br>
 <form name="paid" method="post" action="transaction.jsp">
 <fieldset>

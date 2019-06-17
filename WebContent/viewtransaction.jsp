@@ -79,8 +79,8 @@ while(rs.next()){
 <%} %>
 </table>
 <br><br>
-<a role="button" href="http://localhost:8080/Godutch/dashboard.jsp">View your dashboard</a>
-<a role="button" href="http://localhost:8080/Godutch/viewtransaction.jsp?q=*">View trip transactions</a>
+<a role="button" href="/dashboard.jsp">View your dashboard</a>
+<a role="button" href="/viewtransaction.jsp?q=*">View trip transactions</a>
 <h6><a href="index.html">Login</a></h6>
 <h6><a href="logout.jsp">Logout</a></h6>
 </center>
